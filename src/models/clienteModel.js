@@ -1,4 +1,4 @@
-import { prisma } from '../lib/prisma.js';
+import { prisma } from '../lib/prisma';
 import { z } from 'zod';
 
 async function getAllCliente () {
@@ -54,7 +54,21 @@ async function createCliente (reqBody) {
 
 async function updateCliente (reqBody, reqParams) {
     const { id } = reqParams;
-    const { nome, cpf, data_nascimento, rua, bairro, numero, complemento, municipio, uf, telefone} = reqBody;
+    const clienteSchema = z.object({
+        nome: z.string(),
+        cpf: z.string(),
+        data_nascimento: z.string(),
+        rua: z.string(),
+        bairro: z.string(),
+        numero: z.string(),
+        complemento: z.string(),
+        municipio: z.string(),
+        uf: z.string(),
+        telefone: z.string(),
+    });
+
+    const { nome, cpf, data_nascimento, rua, bairro, numero, complemento, municipio, uf, telefone} = clienteSchema.parse(reqBody);
+
     await prisma.clientes.update({
         where: {
             id: id
