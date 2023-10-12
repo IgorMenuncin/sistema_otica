@@ -1,12 +1,17 @@
 import { prisma } from '../lib/prisma.js';
 import { z } from 'zod';
 
-async function getAllCliente () {
-    const clientes = await prisma.clientes.findMany();
+async function getAllClientes () {
+    const clientes = await prisma.clientes.findMany({
+        select: {
+            nome: true,
+            id: true
+        }
+    });
     return clientes;
 }
 
-async function getUniqueCliente (reqParams) {
+async function getUniqueClientes (reqParams) {
     const idSchema = z.object({
         id: z.string().uuid()
     });
@@ -19,7 +24,7 @@ async function getUniqueCliente (reqParams) {
     return cliente;
 }
 
-async function createCliente (reqBody) {
+async function createClientes (reqBody) {
     const clienteSchema = z.object({
         nome: z.string(),
         cpf: z.string(),
@@ -52,7 +57,7 @@ async function createCliente (reqBody) {
     return `Cliente ${nome} criado com sucesso`;
 }
 
-async function updateCliente (reqBody, reqParams) {
+async function updateClientes (reqBody, reqParams) {
     const idSchema = z.object({
         id: z.string().uuid()
     });
@@ -91,7 +96,7 @@ async function updateCliente (reqBody, reqParams) {
     return `Cliente ${nome} atualizado com sucesso`;
 }
 
-async function deleteCliente (reqBody) {
+async function deleteClientes (reqBody) {
     const idSchema = z.object({
         id: z.string().uuid()
     });
@@ -105,9 +110,9 @@ async function deleteCliente (reqBody) {
 }
 
 export default {
-    getAllCliente,
-    getUniqueCliente,
-    createCliente,
-    updateCliente,
-    deleteCliente
+    getAllClientes,
+    getUniqueClientes,
+    createClientes,
+    updateClientes,
+    deleteClientes
 };

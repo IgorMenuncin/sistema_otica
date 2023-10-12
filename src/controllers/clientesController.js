@@ -1,9 +1,9 @@
-import clienteModel from '../models/clienteModel.js';
+import clientesModel from '../models/clientesModel.js';
 import validaErros from '../auxiliars/validacaoErrors.js';
 
-async function getAllCliente (req, res) {
+async function getAllClientes (req, res) {
     try {
-        const clientes = await clienteModel.getAllCliente();
+        const clientes = await clientesModel.getAllClientes();
         return res.status(200).json(clientes);
     }
     catch (error) {
@@ -12,9 +12,9 @@ async function getAllCliente (req, res) {
     }
 }
 
-async function getUniqueCliente (req, res) {
+async function getUniqueClientes (req, res) {
     try {
-        const cliente = await clienteModel.getUniqueCliente(req.params);
+        const cliente = await clientesModel.getUniqueClientes(req.params);
         return res.status(200).json(cliente);
     } catch (error) {
         const mensagemErro = validaErros(error);
@@ -22,9 +22,9 @@ async function getUniqueCliente (req, res) {
     }
 }
 
-async function createCliente (req, res) {
+async function createClientes (req, res) {
     try {
-        const cliente = await clienteModel.createCliente(req.body);
+        const cliente = await clientesModel.createClientes(req.body);
         return res.status(200).send(cliente);
     }
     catch (error) {
@@ -33,9 +33,9 @@ async function createCliente (req, res) {
     }
 }
 
-async function updateCliente (req, res) {
+async function updateClientes (req, res) {
     try {
-        const cliente = await clienteModel.updateCliente(req.body, req.params);
+        const cliente = await clientesModel.updateClientes(req.body, req.params);
         return res.status(200).send(cliente);
     }
     catch (error) {
@@ -44,9 +44,9 @@ async function updateCliente (req, res) {
     }
 }
 
-async function deleteCliente (req, res) {
+async function deleteClientes (req, res) {
     try {
-        const cliente = await clienteModel.deleteCliente(req.body);
+        const cliente = await clientesModel.deleteClientes(req.body);
         return res.status(200).send(cliente);
     }
     catch (error) {
@@ -56,9 +56,9 @@ async function deleteCliente (req, res) {
 }
 
 export default {
-    getAllCliente,
-    getUniqueCliente,
-    createCliente,
-    updateCliente,
-    deleteCliente
+    getAllClientes,
+    getUniqueClientes,
+    createClientes,
+    updateClientes,
+    deleteClientes
 };

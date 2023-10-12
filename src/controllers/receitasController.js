@@ -18,7 +18,8 @@ async function getUniqueReceitas (req, res) {
         return res.status(400).json(receita);
     }
     catch (error) {
-        res.status(400).json(error);
+        const mensagemErro = validaErros(error);
+        res.status(404).json(mensagemErro);
     }
 }
 
