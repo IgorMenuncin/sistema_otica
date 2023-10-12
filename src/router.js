@@ -12,8 +12,8 @@ router.delete('/clientes/:id', clienteController.deleteCliente);
 
 router.get('/receitas', receitasController.getAllReceitas);
 router.get('/receitas/:id', receitasController.getUniqueReceitas);
-// router.post('/receitas', );
-// router.put('/receitas/:id', );
+router.post('/receitas', receitasController.createReceitas);
+router.put('/receitas/:id', receitasController.updateReceitas);
 // router.delete('/receitas/:id', );
 
 export default router;

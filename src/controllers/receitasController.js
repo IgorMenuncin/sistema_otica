@@ -10,7 +10,19 @@ async function getUniqueReceitas (req, res) {
     return res.status(400).json(receita);
 }
 
+async function createReceitas (req, res) {
+    const receita = await receitasModel.createReceitas(req.body);
+    return res.status(400).json(receita);
+}
+
+async function updateReceitas (req, res) {
+    const receita = await receitasModel.updateReceitas(req.body, req.params);
+    return res.status(400).json(receita);
+}
+
 export default {
     getAllReceitas,
-    getUniqueReceitas
+    getUniqueReceitas,
+    createReceitas,
+    updateReceitas
 };
