@@ -1,8 +1,13 @@
 import clienteModel from '../models/clienteModel.js';
 
 async function getAllCliente (req, res) {
-    const clientes = await clienteModel.getAllCliente();
-    return res.status(200).json(clientes);
+    try {
+        const clientes = await clienteModel.getAllCliente();
+        return res.status(200).json(clientes);
+    }
+    catch (error) {
+        res.status(400).json(error);
+    }
 }
 
 async function getUniqueCliente (req, res) {
@@ -10,7 +15,7 @@ async function getUniqueCliente (req, res) {
         const cliente = await clienteModel.getUniqueCliente(req.params);
         return res.status(200).json(cliente);
     } catch (error) {
-        res.status(404).json('Cliente não encontrado');
+        res.status(404).json(error);
     }
 }
 
@@ -20,18 +25,28 @@ async function createCliente (req, res) {
         return res.status(200).send(`${cliente} criado com sucesso`);
     }
     catch (error) {
-        res.status(400).send('Erro no tipo dos dados recebidos');
+        res.status(400).json(error);
     }
 }
 
 async function updateCliente (req, res) {
-    const cliente = await clienteModel.updateCliente(req.body, req.params);
-    return res.status(200).send(`Cliente ${cliente} alterado com sucesso`);
+    try {
+        const cliente = await clienteModel.updateCliente(req.body, req.params);
+        return res.status(200).send(`Cliente ${cliente} alterado com sucesso`);
+    }
+    catch (error) {
+        res.status(400).json(error);
+    }
 }
 
 async function deleteCliente (req, res) {
-    await clienteModel.deleteCliente(req.params);
-    return res.status(200).send('Cliente deleteado');
+    try {
+        await clienteModel.deleteCliente(req.body);
+        return res.status(200).send('Cliente deleteado');
+    }
+    catch (error) {
+        res.status(400).json(error);
+    }
 }
 
 export default {

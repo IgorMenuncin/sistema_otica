@@ -7,7 +7,8 @@ async function getAllReceitas () {
 }
 
 async function getUniqueReceitas (reqParams) {
-    const { id } = reqParams;
+    const idSchema = z.string().uuid();
+    const { id } = idSchema.parse(reqParams);
     const receita = await prisma.receitas.findUniqueOrThrow({
         where: {
             id: id
@@ -67,7 +68,8 @@ async function createReceitas (reqBody) {
 }
 
 async function updateReceitas (reqBody, reqParams) {
-    const { id } = reqParams;
+    const idSchema = z.string().uuid();
+    const { id } = idSchema.parse(reqParams);
     
     const receitaSchema = z.object({
         id_cliente: z.string().uuid(),
@@ -117,13 +119,24 @@ async function updateReceitas (reqBody, reqParams) {
             e_dnp
         }
     });
-
     return 'Receita atualizada com sucesso';
+}
+
+async function deleteReceitas (reqBody) {
+    const idSchema = z.string().uuid();
+    const { id } = idSchema.parse(reqBody);
+    await prisma.receitas.delete({
+        where: {
+            id: id
+        }
+    });
+    return 'Receita deletada com sucesso';
 }
 
 export default {
     getAllReceitas,
     getUniqueReceitas,
     createReceitas,
-    updateReceitas
+    updateReceitas,
+    deleteReceitas
 };

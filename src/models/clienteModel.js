@@ -7,7 +7,8 @@ async function getAllCliente () {
 }
 
 async function getUniqueCliente (reqParams) {
-    const { id } = reqParams;
+    const idSchema = z.string().uuid();
+    const { id } = idSchema.parse(reqParams);
     const cliente = await prisma.clientes.findUniqueOrThrow({
         where: {
             id: id
@@ -30,10 +31,8 @@ async function createCliente (reqBody) {
         telefone: z.string(),
         usuario: z.string()
     });
-
     const { nome, cpf, data_nascimento, rua, bairro, numero, complemento, municipio, uf, telefone, usuario} = clienteSchema.parse(reqBody);
-
-    const cliente = await prisma.clientes.create({
+    await prisma.clientes.create({
         data: {
             nome,
             cpf,
@@ -48,12 +47,13 @@ async function createCliente (reqBody) {
             createdUser: usuario    
         }
     });
-
-    return cliente.nome;
+    return `Cliente ${nome} criado com sucesso`;
 }
 
 async function updateCliente (reqBody, reqParams) {
-    const { id } = reqParams;
+    const idSchema = z.string().uuid();
+    const { id } = idSchema.parse(reqParams);
+    
     const clienteSchema = z.object({
         nome: z.string(),
         cpf: z.string(),
@@ -66,9 +66,7 @@ async function updateCliente (reqBody, reqParams) {
         uf: z.string(),
         telefone: z.string(),
     });
-
     const { nome, cpf, data_nascimento, rua, bairro, numero, complemento, municipio, uf, telefone} = clienteSchema.parse(reqBody);
-
     await prisma.clientes.update({
         where: {
             id: id
@@ -86,17 +84,18 @@ async function updateCliente (reqBody, reqParams) {
             telefone
         }
     });
-
-    return nome;
+    return `Cliente ${nome} atualizado com sucesso`;
 }
 
-async function deleteCliente (reqParams) {
-    const { id } = reqParams;
+async function deleteCliente (reqBody) {
+    const idSchema = z.string().uuid();
+    const { id } = idSchema.parse(reqBody);
     await prisma.clientes.delete({
         where: {
             id: id
         }
     });
+    return 'Cliente deletado com sucesso';
 }
 
 export default {
