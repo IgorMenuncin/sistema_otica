@@ -1,4 +1,5 @@
 import receitasModel from '../models/receitasModel.js';
+import validaErros from '../auxiliars/validacaoErrors.js';
 
 async function getAllReceitas (req, res) {
     try {
@@ -6,7 +7,8 @@ async function getAllReceitas (req, res) {
         return res.status(400).json(receitas);
     }
     catch (error) {
-        res.status(400).json(error);
+        const mensagemErro = validaErros(error);
+        res.status(404).json(mensagemErro);
     }
 }
 
@@ -26,7 +28,8 @@ async function createReceitas (req, res) {
         return res.status(400).json(receita);
     }
     catch (error) {
-        res.status(400).json(error);
+        const mensagemErro = validaErros(error);
+        res.status(404).json(mensagemErro);
     }
 }
 
@@ -36,7 +39,8 @@ async function updateReceitas (req, res) {
         return res.status(400).json(receita);
     }
     catch (error) {
-        res.status(400).json(error);
+        const mensagemErro = validaErros(error);
+        res.status(404).json(mensagemErro);
     }
 }
 
@@ -46,7 +50,8 @@ async function deleteReceitas (req, res) {
         return res.status(400).json(receita);
     }
     catch (error) {
-        res.status(400).json(error);
+        const mensagemErro = validaErros(error);
+        res.status(404).json(mensagemErro);
     }
 }
 

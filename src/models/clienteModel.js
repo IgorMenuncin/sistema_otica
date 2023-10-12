@@ -7,7 +7,9 @@ async function getAllCliente () {
 }
 
 async function getUniqueCliente (reqParams) {
-    const idSchema = z.string().uuid();
+    const idSchema = z.object({
+        id: z.string().uuid()
+    });
     const { id } = idSchema.parse(reqParams);
     const cliente = await prisma.clientes.findUniqueOrThrow({
         where: {
@@ -51,7 +53,9 @@ async function createCliente (reqBody) {
 }
 
 async function updateCliente (reqBody, reqParams) {
-    const idSchema = z.string().uuid();
+    const idSchema = z.object({
+        id: z.string().uuid()
+    });
     const { id } = idSchema.parse(reqParams);
     
     const clienteSchema = z.object({
@@ -88,7 +92,9 @@ async function updateCliente (reqBody, reqParams) {
 }
 
 async function deleteCliente (reqBody) {
-    const idSchema = z.string().uuid();
+    const idSchema = z.object({
+        id: z.string().uuid()
+    });
     const { id } = idSchema.parse(reqBody);
     await prisma.clientes.delete({
         where: {

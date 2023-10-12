@@ -1,4 +1,5 @@
 import clienteModel from '../models/clienteModel.js';
+import validaErros from '../auxiliars/validacaoErrors.js';
 
 async function getAllCliente (req, res) {
     try {
@@ -6,7 +7,8 @@ async function getAllCliente (req, res) {
         return res.status(200).json(clientes);
     }
     catch (error) {
-        res.status(400).json(error);
+        const mensagemErro = validaErros(error);
+        res.status(404).json(mensagemErro);
     }
 }
 
@@ -15,37 +17,41 @@ async function getUniqueCliente (req, res) {
         const cliente = await clienteModel.getUniqueCliente(req.params);
         return res.status(200).json(cliente);
     } catch (error) {
-        res.status(404).json(error);
+        const mensagemErro = validaErros(error);
+        res.status(404).json(mensagemErro);
     }
 }
 
 async function createCliente (req, res) {
     try {
         const cliente = await clienteModel.createCliente(req.body);
-        return res.status(200).send(`${cliente} criado com sucesso`);
+        return res.status(200).send(cliente);
     }
     catch (error) {
-        res.status(400).json(error);
+        const mensagemErro = validaErros(error);
+        res.status(404).json(mensagemErro);
     }
 }
 
 async function updateCliente (req, res) {
     try {
         const cliente = await clienteModel.updateCliente(req.body, req.params);
-        return res.status(200).send(`Cliente ${cliente} alterado com sucesso`);
+        return res.status(200).send(cliente);
     }
     catch (error) {
-        res.status(400).json(error);
+        const mensagemErro = validaErros(error);
+        res.status(404).json(mensagemErro);
     }
 }
 
 async function deleteCliente (req, res) {
     try {
-        await clienteModel.deleteCliente(req.body);
-        return res.status(200).send('Cliente deleteado');
+        const cliente = await clienteModel.deleteCliente(req.body);
+        return res.status(200).send(cliente);
     }
     catch (error) {
-        res.status(400).json(error);
+        const mensagemErro = validaErros(error);
+        res.status(404).json(mensagemErro);
     }
 }
 
