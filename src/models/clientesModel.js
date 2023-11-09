@@ -96,11 +96,11 @@ async function updateClientes (reqBody, reqParams) {
     return `Cliente ${nome} atualizado com sucesso`;
 }
 
-async function deleteClientes (reqBody) {
+async function deleteClientes (reqParams) {
     const idSchema = z.object({
         id: z.string().uuid()
     });
-    const { id } = idSchema.parse(reqBody);
+    const { id } = idSchema.parse(reqParams);
     await prisma.clientes.delete({
         where: {
             id: id

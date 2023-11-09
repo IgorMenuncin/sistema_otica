@@ -126,11 +126,11 @@ async function updateReceitas (reqBody, reqParams) {
     return 'Receita atualizada com sucesso';
 }
 
-async function deleteReceitas (reqBody) {
+async function deleteReceitas (reqParams) {
     const idSchema = z.object({
         id: z.string().uuid()
     });
-    const { id } = idSchema.parse(reqBody);
+    const { id } = idSchema.parse(reqParams);
     await prisma.receitas.delete({
         where: {
             id: id

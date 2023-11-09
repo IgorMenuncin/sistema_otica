@@ -46,7 +46,7 @@ async function updateClientes (req, res) {
 
 async function deleteClientes (req, res) {
     try {
-        const cliente = await clientesModel.deleteClientes(req.body);
+        const cliente = await clientesModel.deleteClientes(req.params);
         return res.status(200).send(cliente);
     }
     catch (error) {
